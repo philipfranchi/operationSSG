@@ -41,3 +41,6 @@ dist
 
 # RethinkDB
 rethinkdb_data
+
+# Config files
+env.config.js
