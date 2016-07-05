@@ -2,9 +2,16 @@ import webpack              from 'webpack';
 import assign               from 'object-assign';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import path                 from 'path';
 import prodConfig           from './webpack.prod.config.js';
 
 Object.assign = assign;
+
+// Stuff for phaser
+var phaserModule = path.join(__dirname, '../node_modules/phaser');
+var phaser = path.join(phaserModule, 'build/custom/phaser-split.js');
+var pixi = path.join(phaserModule, 'build/custom/pixi.js');
+var p2 = path.join(phaserModule, 'build/custom/p2.js');
 
 const BABEL_QUERY = {
     presets: ['react', 'es2015', 'stage-0'],
@@ -46,6 +53,18 @@ export default function(app) {
                         'css-loader',
                         'sass-loader'
                     ]
+                },
+                {
+                    test:       /pixi\.js/,
+                    loader:     'expose?PIXI'
+                },
+                {
+                    test:       /phaser-split\.js$/,
+                    loader:     'expose?Phaser'
+                },
+                {
+                    test:       /p2\.js/,
+                    loader:     'expose?p2'
                 }
             ]
         },
