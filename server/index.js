@@ -13,6 +13,11 @@ const dev = (process.env.NODE_ENV !== 'production');
 const source = fs.readFileSync(path.join(__dirname, './template.hbs'), 'utf8');
 const html = handlebars.compile(source)({ dev });
 
+// Use webpack middleware in dev mode
+if(dev) {
+    require('../webpack/webpack.dev').default(app)
+}
+
 app.use(express.static('dist'));
 app.use('/api', routes);
 
